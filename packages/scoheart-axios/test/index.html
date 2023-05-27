@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My axios demo v1</title>
+</head>
+
+<body>
+    <script src="../dist/axios.umd.js"></script>
+    <script>
+
+        console.log(this)
+
+        axios.interceptors.request.use(function (config) {
+            console.log("req inter1")
+            return config
+        }, function () {
+            console.log("req inter1 error")
+            return Promise.reject("Sdf")
+
+        })
+
+        axios.interceptors.request.use(function (config) {
+            console.log("req inter2")
+            return config
+        }, function () {
+            console.log("req inter2 error")
+            return Promise.reject("Sdf")
+        })
+
+        axios.interceptors.response.use(function (response) {
+            console.log("response inter1")
+            return response
+        }, function () {
+            console.log("response inter1 error")
+            return Promise.reject("Sdf")
+        })
+
+        axios.interceptors.response.use(function (response) {
+            console.log("response inter2")
+            return response
+
+        }, function () {
+            console.log("response inter2 error")
+            return Promise.reject("Sdf")
+
+        })
+
+        const post = axios.get("http://localhost:8081/student")
+
+
+        post.then(res => {
+            console.log(res)
+        }, reason => {
+            console.log(reason)
+        })
+
+       
+
+
+    </script>
+
+</body>
+
+</html>

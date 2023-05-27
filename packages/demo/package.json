@@ -10,6 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@scoheart/cli": "workspace:^0.0.7"
+    "@scoheart/cli": "workspace:^0.0.8"
   }
 }

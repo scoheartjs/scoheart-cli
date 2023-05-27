@@ -1,23 +1,74 @@
+import AxiosError from '../core/AxiosError.js';
 
- function xhrAdapter(config) {
+const isXhrAdapterSupported = typeof window !== "undefined"
 
-    return new Promise((resolve, reject) => {
-        let xhr = new XMLHttpRequest()
+export default isXhrAdapterSupported && function (config) {
+    return new Promise(function dispatchXhrAdapter(resolve, reject) {
 
-        xhr.open(config.method, config.url)
+        const requestData = config.data
 
-        xhr.send()
+        let request = new XMLHttpRequest()
 
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4) {
-                if(xhr.status >= 200 && xhr.status < 300){
-                    resolve(JSON.parse(xhr.response))
-                }else{
-                    reject("error")
-                }
+        request.timeout = config.timeout
+
+        request.open(config.method, config.url, true)
+
+        function onloadend() {
+            if (!request) return
+
+            const response = {
+                data: request.response,
+                status: request.status,
+                statusText: request.statusText,
+                headers: request.getAllResponseHeaders()
+            }
+
+            if (request.status === 200) {
+                resolve(response)
+            }
+
+            // clean up request 
+            request = null
+        }
+
+        if ("onloadend" in request) {
+            // use onloadend callback if available
+            request.onloadend = onloadend
+        } else {
+            // if unavailable
+            // use onreadystatechange to listen for readystate to emulate onloadend
+            request.onreadystatechange = function () {
+                if (!request && request.readystate !== 4) return
+
+                if (request.status === 0) return
+
+                // next eventloop call onloadend
+                setTimeout(onloadend)
             }
         }
+
+        request.onabort = function handleAbort() {
+            if (!request) return
+
+            reject(new AxiosError(0))
+
+            request = null
+        }
+
+        request.onerror = function handleError() {
+            reject(new AxiosError(2))
+
+            // clean up request
+            request = null
+        }
+
+        request.ontimeout = function handleTimeout() {
+            reject(new AxiosError(1))
+
+            // clean up request
+            request = null
+        }
+
+        request.send(requestData || null)
     })
 }
-
-export default xhrAdapter

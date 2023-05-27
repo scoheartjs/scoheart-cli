@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dorm management</title>
+    <script src="/sco-axios/dist/bundle.js"></script>
+</head>
+<style>
+    button {
+        width: 80px;
+        height: 30px;
+    }
+
+    #get {
+        background-color: rgb(28, 89, 142);
+    }
+
+    #list {
+        background-color: rgb(29, 181, 37);
+    }
+
+    #insert {
+        background-color: rgb(191, 51, 126);
+    }
+
+    #delete {
+        background-color: rgb(173, 51, 51);
+    }
+
+    #update {
+        background-color: #c17d7d;
+    }
+
+    input {
+        display: block;
+    }
+</style>
+
+<body>
+    <div>
+        <button id="get">get</button>
+        <button id="list">list</button>
+        <button id="insert">insert</button>
+        <button id="delete">delete</button>
+        <button id="update">update</button>
+
+        <hr>
+
+        <form action="">
+            <div>
+                <label for="">name</label>
+                <input type="text">
+            </div>
+            <div>
+                <label for="">age</label>
+                <input type="text">
+            </div>
+            <div>
+                <label for="">gender</label>
+                <input type="text">
+            </div>
+            <div>
+                <label for="">grade</label>
+                <input type="text">
+            </div>
+            <div>
+                <label for="">major</label>
+                <input type="text">
+            </div>
+            <div>
+                <br>
+                <button>submit</button>
+            </div>
+        </form>
+
+        <hr>
+
+        <table class="table" border="1">
+            <tr>
+                <th>name</th>
+                <th>age</th>
+                <th>gender</th>
+                <th>grade</th>
+                <th>major</th>
+            </tr>
+        </table>
+    </div>
+
+    <script src="./dorm.js"></script>
+</body>
+
+</html>
+
